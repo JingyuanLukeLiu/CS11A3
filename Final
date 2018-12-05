@@ -1,0 +1,453 @@
+import java.util.Scanner;
+
+public class Lifegamefinal{
+  public static int IQ;// create static variables to be used in every methods
+  public static int EQ;
+  public static int Physical;
+  public static int Work;
+  public static int Social;
+  public static int Rest;
+  public static double IQcoefficient;
+  public static double EQcoefficient;
+  public static double Phycoefficient;
+  public static String IQevaluation;
+  public static String EQevaluation;
+  public static String Phyevalution;
+  public static String IQimprove;
+  public static String EQimprove;
+  public static String Phyimprove;
+
+  public static void main(String[] args){
+    boolean game = true;
+    while(game = true){
+      double[][] report = new double[4][3];//Generate 2-dimension array to store 4 years' score
+      randomAbility(); // generate random ability including IQ, EQ, and Physical
+      int talent = IQ + Physical +EQ;
+      if(talent<23){//use if structure to inform users how much innate talent abilities they have got
+        System.out.println("Welcome to our program. During this round, you acting as a newcoming brandeis student whose score is below the average. You really want to make progess during four years in college and this is the time for you to prove it to other people.\n");
+      } else if(talent>=23 && talent<38){
+        System.out.println("Welcome to our program. During this round, you acting as a normal newcoming brandeis student. You are afraid of other people surpass you and You have decided to achieve your dream during college.\n");
+      } else if (talent>=38){
+        System.out.println("Welcome to our program. During this round, you acting as a newcoming brandeis student. You have been considered as a genius since you were a child. The only mission for you in college is to express yourself and show people what you have.\n");
+      }
+      for(int i = 0; i < 4; i++){ //use for-loop to stimulate four-year study
+        System.out.println("Last year has gone and the new year starts:");
+        inputLife();//ask users to input their choices how they distribute their time
+        double Grade = outputScore(IQ,Work,IQcoefficient);//use outputScore method to calculate the score they have got by calculating talent ability and thier choice of distributing time
+        double Connection = outputScore(EQ,Social,EQcoefficient);
+        double Health = outputScore(Physical,Rest,Phycoefficient);
+        String IQevaluation = evaluateScore(Grade);// use evaluateScore method to evaluate the score
+        String EQevaluation = evaluateScore(Connection);
+        String Phyevalution = evaluateScore(Health);
+
+        switch(i){//use switch to classified discuss the specific situations for each year
+          case 0:
+          report[i][0] = Grade;
+          report[i][1] = Connection;
+          report[i][2] = Health;
+          System.out.printf("The evaluation for your first year:\nGrade = %s\nSociability = %s\nHealth = %s%n%n",
+          IQevaluation,EQevaluation,Phyevalution);//use format-print to print out the evaluation for the first year
+
+          System.out.printf("The summary for your first year study:%n%n");//use if structure to determine which categories their scores are
+          if(Grade>0.08 && Connection>0.08 && Health>0.08){
+            System.out.print("Congratulation! You’ve scored straight A throughout your freshmen year and multiple TA jobs are offered. There is not a party without you presenting.");
+          } else if (Grade>0.08 && Connection>0.08 && Health<=0.08){
+            System.out.print("You’ve scored straight A throughout your freshmen year and multiple TA jobs are offered. There is not a party without you presenting. However, sleepiness has always been bothering you.");
+          } else if (Grade>0.08 && Connection<=0.08 && Health>0.08){
+            System.out.print("You’ve scored straight A throughout your freshmen year and multiple TA jobs are offered. You are in good health and sleep well. But You didn’t make a lot of friends.");
+          } else if (Grade<=0.08 && Connection>0.08 && Health>0.08){
+            System.out.print("The semester is over, you’ve built a number of connections however academic has been rough for you. It’s a good thing for you to maintain the balance.");
+          } else if (Grade>0.08 && Connection<=0.08 && Health<=0.08){
+            System.out.print("You’ve scored straight A throughout your freshmen year and multiple TA jobs are offered. You didn’t make a lot of friends. By the way, go get some sleep.");
+          } else if (Grade<=0.08 && Connection<=0.08 && Health>0.08){
+            System.out.print("Finally the semester is over, you are in good health and sleep well. However, academic has been rough for you and you didn’t make a lot of friends.");
+          } else if (Grade<=0.08 && Connection<=0.08 && Health<=0.08){
+            System.out.print("Although you try hard, life beats you. Maybe change your strategy next time and focus on one subject only.");
+          } else if (Grade<=0.08 && Connection>0.08 && Health<=0.08){
+            System.out.print("The semester is over, you’ve built a number of connections however academic has been rough for you. It’s a good thing for you to maintain the balance. You fall asleep in class from time to time. Sleepiness has become a problem.");
+          }
+
+          conditioncheck(Grade,Connection,Health);//use conditioncheck to check whether the comtemporary condition satisfies the school's requirement
+
+          System.out.printf("%n%n");
+          double [] firstyear = new double[3];
+          for(int k = 0;k<3;k++){
+            firstyear[k]=1.0;//use for-loop to reset the value
+          }
+          Scanner type1 = new Scanner(System.in);
+          System.out.println("Holiday: \nWhat do you want to do during your first year summer holiday?\n1.Participate in the “Justice Brandeis Semester” work closely with students.\n2.Travel with friend to India.\n3.Skiing.\n4.Participate in the “Boston IRVING & TATUM basketball camp” at TD Garden, $500.");
+          int selections1 = type1.nextInt();
+          type1.nextLine();
+          System.out.println();
+          if(selections1 == 3){//use if-structure to classified discuss different choices users input for their summer holidy
+            System.out.println("Where do you want to go?\na) SundayRiver Ski resort\nb) Nanshan Ski resort");
+            String ski = type1.nextLine().trim();
+            if(ski.equals("a")){
+              firstyear[1] = 1.8;
+              firstyear[2] = 1.8;
+              System.out.println("It’s been fun, but also physically challenging. The good news is you made it through.\nYour next year's study efficiency has improved and ready for physical exercise next year.");
+            } else if (ski.equals("b")){
+              System.out.println("I’m so sorry, but Nanshan Ski resort is a “Stricken land”, death has been reported every year from there. So you are so lucky, only got a broken leg! Yeah!\nYou hardly could do any sports next year.");
+              firstyear[2] = 0.3;
+            } else {
+              System.out.println("error!Please choose a or b");
+            }
+          } else {
+            switch(selections1){//use switch to set value for different choices
+              case 1: firstyear[0]= 1.6;
+              System.out.println("Your performance throughout the program is complimented by the professor.\nYour next year's study efficiency has improved.");
+              break;
+              case 2: firstyear[1]= 1.6;
+              System.out.println("Solid friend ship is developed on the back of a elephant.\nYou are ready to make more friends next year.");
+              break;
+              case 4: firstyear[2]= 1.6;
+              System.out.println("When the person you see on TV stands right in front of you, how could you not work hard?\nYou are ready for physical exercise next year.");
+              break;
+              default: System.out.printf("%s not understood%n",selections1);
+            }
+          }
+          for(int j=0;j<firstyear.length;j++){
+            System.out.println(firstyear[j]);
+          }
+          IQcoefficient = firstyear[0];//set value of IQ, EQ, Physical coefficient for each year depending on what choices they have during summer holiday
+          EQcoefficient = firstyear[1];
+          Phycoefficient = firstyear[2];
+          break;
+
+
+          case 1:
+          if(Grade>report[i-1][0]){//show whether users' performance is improving
+            IQimprove = "(improving)";
+          } else if (Grade<report[i-1][0]){
+            IQimprove = "(getting worse)";
+          } else {
+            IQimprove = "(constant)";
+          }
+          if(Connection>report[i-1][1]){
+            EQimprove = "(improving)";
+          } else if (Connection<report[i-1][1]){
+            EQimprove = "(getting worse)";
+          } else {
+          EQimprove = "(constant)";
+          }
+          if(Health>report[i-1][2]){
+            Phyimprove ="(improving)";
+          } else if (Health<report[i-1][2]){
+            Phyimprove = "(getting worse)";
+          } else {
+            Phyimprove = "(constant)";
+          }
+        report[i][0] = Grade+report[i-1][0];
+        report[i][1] = Connection+report[i-1][1];
+        report[i][2] = Health+report[i-1][2];
+        System.out.printf("The evaluation for your second year:\nGrade = %s%s\nConnection = %s%s\nHealth = %s%s%n%n",
+        IQevaluation,IQimprove,EQevaluation,EQimprove,Phyevalution,Phyimprove);
+
+        System.out.printf("The summary for your second year study:%n%n");
+        if(report[1][0]>0.16 && report[1][1]>0.16 && report[1][2]>0.16){
+          System.out.print("Congratulation! You are handling the significant heavier work load pretty well. Hope you can maintain the excellence. Your friends are always there when you need them.");
+        } else if (report[1][0]>0.16 && report[1][1]>0.16 && report[1][2]<=0.16){
+          System.out.print("You are handling the significant heavier work load pretty well. Hope you can maintain the excellence. Your friends are always there when you need them. While your academic and social life is colorful, you sometimes feel very weak because of your physical problems.");
+        } else if (report[1][0]>0.16 && report[1][1]<=0.16 && report[1][2]>0.16){
+          System.out.print("You are handling the significant heavier work load pretty well. Hope you can maintain the excellence. It’s the second year in college already, you still hide your dorm and don’t have many friends.");
+        } else if (report[1][0]>0.16 && report[1][1]<=0.16 && report[1][2]<=0.16){
+          System.out.print("You are handling the significant heavier work load pretty well. Hope you can maintain the excellence. It’s the second year in college already, you still hide your dorm and don’t have many friends. You sometimes feel very weak because of your physical problems.");
+        } else if (report[1][0]<=0.16 && report[1][1]<=0.16 && report[1][2]>0.16){
+          System.out.print("Your physical body is strong. However, study should always be prioritized in college. More effort is needed. It’s the second year in college already, you still hide your dorm and don’t have many friends.");
+        } else if (report[1][0]<=0.16 && report[1][1]<=0.16 && report[1][2]<=0.16){
+          System.out.print("Although it is the second year, you still fall behind. Go and make some changes!");
+        } else if (report[1][0]<=0.16 && report[1][1]>0.16 && report[1][2]>0.16){
+          System.out.print("The good thing is your friends are always there when you need them. However, study should always be prioritized in college. More effort is needed.");
+        } else if (report[1][0]<=0.16 && report[1][1]>0.16 && report[1][2]<=0.16){
+          System.out.print("The good thing is your friends are always there when you need them. However, study should always be prioritized in college. More effort is needed. You sometimes feel very weak because of your physical problems.");
+        }
+
+        conditioncheck(Grade,Connection,Health);
+
+        System.out.printf("%n%n");
+        double [] secondyear = new double[3];
+        for(int l = 0;l<3;l++){
+          secondyear[l]=1.0;
+        }
+        Scanner type2 = new Scanner(System.in);
+        System.out.println("Holiday:\nWhat do you want to do during your second summer holiday?\n1.Travel to Las Vegas, standing in front of the Casino of Luxor\n2.Cousins’ swimming instructor\n3.Google internship\n4.League of Legend");
+        int selections2 = type2.nextInt();
+        type2.nextLine();
+        System.out.println("");
+        if(selections2 == 1){
+          System.out.println("a)Gamble\nb)No Gamble");
+          String Gamble = type2.nextLine().trim();
+          if(Gamble.equals("a")){
+            secondyear[1] = 0.5;
+            System.out.println("I’m so sorry, you lose all your tuition fee because of your lustful urges in that Gambling house.\nYou could not go out frequently next year.");
+          } else if (Gamble.equals("b")){
+            secondyear[1] = 2.2;
+            System.out.println("You visit other places and enjoy a wonderful journey.\nYou could tell your trip to people around you next year.");
+          } else {
+            System.out.println("error!Please choose a or b");
+          }
+        } else {
+          switch(selections2){
+            case 2: secondyear[2]= 1.8;
+            System.out.println("Not only the kid got some exercise, so do you.\nYou are ready for physical exercise next year.");
+            break;
+            case 3: secondyear[0]= 1.8;
+            System.out.println("Advance experiences is always a booster.\nYour next year's study efficiency has improved.");
+            break;
+            case 4: secondyear[1]= 0.6;
+            secondyear[0]=2.5;
+            System.out.println("While your legends are told by the Ionians, you had 17 missed call from your friend.\nMaybe you should find some time next year to fix your relationship, but gaming makes you brain more effective.");
+            break;
+            default: System.out.printf("%s not understood%n",selections2);
+          }
+        }
+        for(int j=0;j<secondyear.length;j++){
+          System.out.println(secondyear[j]);
+        }
+        IQcoefficient = secondyear[0];
+        EQcoefficient = secondyear[1];
+        Phycoefficient = secondyear[2];
+        break;
+
+
+        case 2:
+        if(Grade>(report[i-1][0]-report[i-2][0])){
+          IQimprove = "(improving)";
+        } else if(Grade < (report[i-1][0]-report[i-2][0])){
+          IQimprove = "(getting worse)";
+        } else {
+          IQimprove = "(constant)";
+        }
+        if(Connection > (report[i-1][1]-report[i-2][1])){
+          EQimprove = "(improving)";
+        } else if(Connection < (report[i-1][1]-report[i-2][1])){
+          EQimprove = "(getting worse)";
+        } else {
+          EQimprove = "(constant)";
+        }
+        if(Health>(report[i-1][2]-report[i-2][2])){
+          Phyimprove ="(improving)";
+        } else if(Health < (report[i-1][1]-report[i-2][2])){
+          Phyimprove = "(getting worse)";
+        } else {
+          Phyimprove ="(constant)";
+        }
+        report[i][0] = Grade+report[i-1][0];
+        report[i][1] = Connection+report[i-1][1];
+        report[i][2] = Health+report[i-1][2];
+        System.out.printf("The evaluation for your third year:\nGrade = %s%s\nConnection = %s%s\nHealth = %s%s%n%n",
+        IQevaluation,IQimprove,EQevaluation,EQimprove,Phyevalution,Phyimprove);
+        System.out.printf("The summary for your third year study:%n%n");
+        if(report[i][0]>0.24 && report[i][1]>0.24 && report[i][2]>0.24){
+          System.out.print("Congratulation! Your excellent academic performance enabled you to become the first ever triple major triple minor student with a 4.0 GPA. You are winner in all aspects of life.");
+        } else if (report[i][0]>0.24 && report[i][1]>0.24 && report[i][2]<=0.24){
+          System.out.print("Your excellent academic performance enabled you to become the first ever triple major triple minor student with a 4.0 GPA. Although you are so close to success, sleepiness always bothers you.");
+        } else if (report[i][0]>0.24 && report[i][1]<=0.24 && report[i][2]>0.24){
+          System.out.print("Your excellent academic performance enabled you to become the first ever triple major triple minor student with a 4.0 GPA. But you haven’t had a lot of social life going since it’s such a busy year.");
+        } else if (report[i][0]<=0.24 && report[i][1]>0.24 && report[i][2]>0.24){
+          System.out.print("You are healthier than other people and have a lot of friends. However, pay attention on your GPA. You GPA is falling behind. ");
+        } else if (report[i][0]>0.24 && report[i][1]<=0.24 && report[i][2]<=0.24){
+          System.out.print("Your excellent academic performance enabled you to become the first ever triple major triple minor student with a 4.0 GPA. But you haven’t had a lot of social life going since it’s such a busy year. Sleepiness always bothers you.");
+        } else if (report[i][0]<=0.24 && report[i][1]<=0.24 && report[i][2]>0.24){
+          System.out.print("You are stronger and healthier than other people.  But you haven’t had a lot of social life going since it’s such a busy year. You GPA is falling behind.");
+        } else if (report[i][0]<=0.24 && report[i][1]<=0.24 && report[i][2]<=0.24){
+          System.out.print("I know you had a hard time while you give and are not being paid back. It seems like it's too late to make changes so just have fun and sleep well in this last year. At least you will still be a healthy man.");
+        } else if (report[i][0]<=0.24 && report[i][1]>0.24 && report[i][2]<=0.24){
+          System.out.print("You have a lot of people to support you. However, pay attention on your health. Disease always entangles you. You GPA is falling behind.");
+        }
+
+        conditioncheck(Grade,Connection,Health);
+
+        System.out.printf("%n%n");
+        double [] thirdyear = new double[3];
+        for(int v = 0;v<3;v++){
+          thirdyear[v]=1.0;
+        }
+        Scanner type3 = new Scanner(System.in);
+        System.out.println("Holiday:\nWhat do you want to do during your third summer holiday?\n1.Find a boy/girl friend\n2.Be an orientation leader\n3.Put your study by and sign up for a 3 month “mushroom picking club");
+        int selections3 = type3.nextInt();
+        type3.nextLine();
+        System.out.println("");
+        switch(selections3){
+          case 1: thirdyear[0]= 0.3;
+          thirdyear[1] = 3.0;
+          thirdyear[2] = 0.3;
+          System.out.println("Although most of your free time has been occupied by him/her, you meet many his/her friends aournd campus\nYou are more outgoing and have less free time next year.");
+          break;
+          case 2: thirdyear[1]= 1.8;
+          System.out.println("You make many new friends during orientation.\nYour are more outgoing next year.");
+          break;
+          case 3: thirdyear[0]= 1.4;
+          thirdyear[1]= 1.4;
+          thirdyear[2]= 1.4;
+          System.out.println("You took a break from the intense study life, and gained inner peace.\nYou are not afraid of any chanllenges next year.");
+          break;
+          default: System.out.printf("%s not understood%n",selections3);
+        }
+        for(int j=0;j<thirdyear.length;j++){
+          System.out.println(thirdyear[j]);
+        }
+        IQcoefficient = thirdyear[0];
+        EQcoefficient = thirdyear[1];
+        Phycoefficient = thirdyear[2];
+        break;
+
+
+        case 3:
+        if(Grade>(report[i-1][0]-report[i-2][0])){
+          IQimprove = "(improving)";
+        } else if(Grade < (report[i-1][0]-report[i-2][0])){
+          IQimprove = "(getting worse)";
+        } else {
+          IQimprove = "(constant)";
+        }
+        if(Connection > (report[i-1][1]-report[i-2][1])){
+          EQimprove = "(improving)";
+        } else if(Connection < (report[i-1][1]-report[i-2][1])){
+          EQimprove = "(getting worse)";
+        } else {
+          EQimprove = "(constant)";
+        }
+        if(Health>(report[i-1][2]-report[i-2][2])){
+          Phyimprove ="(improving)";
+        } else if(Health < (report[i-1][1]-report[i-2][2])){
+          Phyimprove = "(getting worse)";
+        } else {
+          Phyimprove ="(constant)";
+        }
+        report[i][0] = Grade+report[i-1][0];
+        report[i][1] = Connection+report[i-1][1];
+        report[i][2] = Health+report[i-1][2];
+        System.out.printf("The evaluation for your fourth year:\nGrade = %s%s\nConnection = %s%s\nHealth = %s%s%n%n",
+        IQevaluation,IQimprove,EQevaluation,EQimprove,Phyevalution,Phyimprove);
+
+        conditioncheck(Grade,Connection,Health);
+
+        System.out.printf("Congratulation! You have graduated from the college and Here is the ending of your story:%n%n");//print out final evaluation and reccomendation for users
+        if(report[i][0]>0.36 && report[i][1]>0.36 && report[i][2]>0.36){
+          System.out.println(" What a journey! While it’s impossible to be perfect on every aspect, you’re as close to it as a person could be. Not only did you finished your college career with the highest academic achievement from your institution, your network reached all different groups on campus and beyond.\n  While you’re classmates are chasing their dream jobs, you have the privilege tochoose who do you wanna work for, where do you wanna work at, or even be your own employer. Your grade physical condition allows you to stay on top over any condition, whether it’s high intensity work or your favourite hobbies.\n You are invited back to Brandeis every once a while, to talk to students and show them while it’s difficult, it is possible to find a perfect balance that willbenefit them for the rest of their lives.");
+        } else if (report[i][0]>0.36 && report[i][1]>0.36 && report[i][2]<=0.36){
+          System.out.println(" College is not easy, but you have never been a quitter. You understand the you only have 24 hours a day and you are not capable of stay on top on everything. In this case, you chose to prioritize getting a high GPA and building professional connections. You’re known as the hard-core worker among your friends, attending all academic and career-building events. At the end,  you earned what you wanted: two months before graduation, your dream company offers you a position, after your professor wrote them a letter. After a year of hard work, your senior thesis is finished and it is published on a academic magazine that you used to read.\n While everything seems going great, the price of ignoring your physical wellness starts to kick in. After years of skipping meals and lack of rest, it explodes the summer after college. While you barely recovered before the first day of work, it keeps having an effect on you for a very long time.Even though you are great at your job and everyone seems to like you, you aren’t able to build a close relationship with your co-workers since you cannot participate in a lot of the group activities after work. Sometimes, you wonder if a 4.0 GPA or a job offer is worth to sacrifice your body. Luck for you, at least you have a steady and well-paid job and there is plenty of time for you to fix that.");
+        } else if (report[i][0]>0.36 && report[i][1]<=0.36 && report[i][2]>0.36){
+          System.out.println(" College is not easy, but you have never been a quitter. You understand the you only have 24 hours a day and you are not capable of stay on top on everything. In this case, you chose to prioritize getting a high GPA and maintain a health body, and spend less time on building relationships and expanding your social circle. After four years, you graduate with an extraordinary GPA with a decent physical condition.\n As expected, you were employed by your top choice company. At first, you find it rather easy with the skills you learned in college. However, due to the lack of social skills, you had a hard time adapting to the “real world”. After half of a year, you’re still so close with much of many of your colleagues. You are perfectly capable of accomplishing your job, but your boss rarely pay attention to your works. More often than it should, you have to put in extra works to earn recognition from your superior and colleagues. You thought about finding a new job, but you knew little people from college to help you on that. On the good side, since you don’t need to worry about failing your work, there is plenty of time for you to learn to have a drink with your fellow human beings.");
+        } else if (report[i][0]<=0.36 && report[i][1]>0.36 && report[i][2]>0.36){
+          System.out.println(" College is not easy, but you have never been a quitter. You understand the you only have 24 hours a day and you are not capable of stay on top on everything. In this case, you chose to develop your relationship with people on and off campus, while maintaining a health body. While no professors remember much about you, your classmates know you as the one to go to when they have any trouble. Graduated from college, you know you have little chances at the top ranking firms, so you turn to one of your friends who introduces you to a startup company owned by him and some of his partners.\n At first, most of your co-workers do not recognize you as a new-comer with no particular professional skills. However, it didn’t take long for you to show them what you can bring to the team. Not only do you know all sort of individuals who are willing to do you a favor all over the places, you’re willing to put yourself out there, do a lot of the hard lifting that no one want to take on. Outside of work, you are everyone’s friend, whether they are having relationship issues or just wanna grab a drink and play some pools. While you’re not the technical core of the company, everyone appreciate your existence.");
+        } else if (report[i][0]>0.36 && report[i][1]<=0.36 && report[i][2]<=0.36){
+          System.out.println("At your graduation, you keep checking your watch, cannot wait to get out of this place. People have called you “book smart”, but you know they are just jealous of your grade. At the end of the four years, you earned almost all the academic honors one can achieve. With your honor thesis, you enrolled in one of the top graduate programs in the nation and started to pursue a doctoral degree.\n Many people consider you a rather successful scholar who made your name at such a young age, but your life is not as fulfilling as other imagined. Your daily schedule is extremely simple, moving back and forth between home and work. You only made a few friends in college, and you have not been in touch with them since graduation. After moving out of your house and living in an apartment, you have even less motivation to communicate with other people. The lack of interaction with the world also harms your body. Even though you have more time for rest than you did in college, you rarely get a good night sleep. You never developed the habit of exercising and you also feel tired of such a young age. The only thing that comforts you is that at least you are surrounded by people like you. They may be as awkward as you, but at least they appreciate your expertise and will treat you as one of them.");
+        } else if (report[i][0]<=0.36 && report[i][1]<=0.36 && report[i][2]>0.36){
+          System.out.println("At your graduation, you were a little sad when saying goodbye to your teammates, but most of the time you are just lost. Different from many of your classmates, you spent all four years with your sports team. You guys trained together, compete together and lived together. All you ever thought about is the lesson from last competition and how to do better in the next one. Wanna do something different with your life, you didn’t try to play for a professional team, though many think it is a mistake. You are ready to leave this campus, but you are not sure where you’re going.\n You used to think working is just like training, with 100% input comes with 100% rewards. It didn’t take long for you to notice that doing to the right thing at the right place is far more important. Sports allows you to compete under a same set of rules but life doesn’t. You are not proficient in a specific skill that will help your job, and you are not so good with the rules of socializing either. Luck for you, you are still well in-shape so a little pressure won’t crash you immediately. You are not good with words but you never mean any harm, so people are willing to be patient with you. You are slowly finding your place in the company, where your physical strength can cover your lack of skills. It will be a long way to go, but you have nothing but time.");
+        } else if (report[i][0]<=0.36 && report[i][1]<=0.36 && report[i][2]<=0.36){
+          System.out.println(" Unfortunately, while you are able to make it through three years of college, it didn’t not bring much benefit to your life. The world outside of college is merciless, and you’re not ready for it.\n Due to your low academic performance and lack of connections, you didn’t get a offer for work before graduation. After spending half of a year at home, you finally are able to get employed, though it’s far off from your expectation when you entered college. Even though you’re slowly learning skills and building your connection from scratch, your weak physical condition often stops you from fulfill your potential.\n While you’re far off from some of your classmates, you did learn from your mistakes and started to get better at managing your limited time in a more efficient way. Some may say your college career are four years of wasted time, but you like to see it as a lesson for the rest of your life.");
+        } else if (report[i][0]<=0.36 && report[i][1]>0.36 && report[i][2]<=0.36){
+          System.out.println("At your graduation, you feel like a king leaving his castle. Every face is familiar to you, and you know they will have your back when you needed them. Maybe you didn’t make the honor list, but who cares! You are loved by both your classmates and professors, may justify some of them, but you know that’s the highest achievement you can image.\n In a few months, you find out that the real world is much more complicated than you imagined. Two weeks into working, you are almost fired for screwing up an important task, and for the first time you regret missing classes. While you easily are friended with most of the people in your company, you start to notice that being good with words can’t solve all the problems. The core workers may not be the most likable ones, but they are truly irreplaceable, and people respect them for that. Being the one with few specialties to stay in offices, the only way to keep your job is to put in more work, which is another thing you rarely do in college. Your body is drained out every day from sales trips and other physical-demanding works. Although never admit it, you do miss your college years, where you can get almost anything done by just being a charming and charismatic person.");
+        }
+      }
+    }
+    System.out.println("Final report: ");// print out the final report for each parameter
+    for(int h = 0; h < 4; h++){
+      System.out.printf("Semester %d:    Grade = %.1f Connection = %.1f Health = %.1f%n",
+      h+1, report[h][0] * 100,report[h][1] * 100 ,report[h][2] * 100);
+    }
+    break;
+  }
+
+
+  System.out.println("Do you want to do another round?");//use while loop check whether users want another round
+  Scanner input = new Scanner(System.in);
+  String check = input.nextLine();
+  if (check.equals("no")){
+    game = false;// if users want another round the boolean value turns into true. if users do not want another round the boolean value turns into false and stop the program
+    return;
+  }
+}
+
+/**
+randomAbility method is to generate random talent abilities (IQ, EQ, and Physcial) for each users
+*/
+public static void randomAbility(){
+  IQ = (int)(Math.floor(Math.random() * 10) + 5);
+  EQ = (int)(Math.floor(Math.random() * 10) + 5);
+  Physical = (int)(Math.floor(Math.random() * 10) + 5);
+  IQcoefficient = 1;
+  EQcoefficient = 1;
+  Phycoefficient = 1;
+}
+
+/**
+inputLife method is to ask user to input their choices of distributing time for each year from the keyboard
+*/
+public static void inputLife(){
+  Scanner console = new Scanner(System.in);
+  while(true){
+    System.out.println("How do you arrange your everyday hours for Rest, Work, and Social for this year?\n (Input 0 - 24 / The sum of three selections should be 24)");
+    System.out.println("The hours for Work: ");
+    Work = console.nextInt();
+    System.out.println("The hours for Social: ");
+    Social = console.nextInt();
+    System.out.println("The hours for Rest: ");
+    Rest = console.nextInt();
+    System.out.println();
+    if(Rest < 0 || Work < 0 || Social < 0 || (Rest + Work + Social) != 24){
+      System.out.println("Error: Please input again!");
+    }else{
+      return;
+    }
+  }
+}
+
+/**
+outputScore method is to calculate ouput including Grade, Connection, and health
+@param ability talent ability including IQ, EQ, and Physcial
+@param input users' choices of how they distribute time for each year
+@param coefficient IQ, EQ, and Physcial coefficients, which are determined by choices in summer holiday
+@return ouput scores for users each year
+*/
+public static double outputScore(int ability, int input, double coefficient){
+  return ability * input * coefficient/ 1000.0;
+}
+
+/**
+evaluateScore method is to evaluate users' choices of how they distribute time for each year
+@param input users' choices of how they distribute time for each year
+@return evaluate scores for each input
+*/
+
+public static String evaluateScore(double input){
+  String evaluation = "";
+  if(input>0.10){
+    evaluation = "Excellent";
+  } else if(input<=0.10 && input>0.03) {
+    evaluation = "Normal";
+  } else {
+    evaluation = "Very Bad";
+  }
+  return evaluation;
+}
+
+/**
+conditioncheck method is check users' contemporary codition to determine whether they accord with the school's requirement
+@param Grade output score which is determined by talent abilities IQ, time for Work, and choice of summer holiday
+@param Connection score which is determined by talent abilities EQ, time for Social, and choice of summer holiday
+@param Health score which is determined by talent abilities Physical, time for Rest, and choice of summer holiday
+*/
+public static void conditioncheck(double Grade, double Connection, double Health){
+  if(Grade<0.03){
+    System.out.println(" Because you skip too many tests at school, you have been expelled by the principal!\n\nGame Over!!!");
+    System.exit(0);
+  } else if (Connection<0.03){
+    System.out.println(" Because you feel too lonely, you can't adapt the school environment any more and drop out of it!\n\nGame Over!!!");
+    System.exit(0);
+  } else if (Health<0.03){
+    System.out.println(" Because of your unhealth condition, you are sent away by ambulance one day during class!\n\nGame Over!!!");
+    System.exit(0);
+  }
+}
+}
+
+
+
+
+
+
+
+
